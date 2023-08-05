@@ -1,0 +1,56 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Go Corona | Home</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+</head>
+
+<body>
+    <div class="group">
+        <header>
+            <h1>India fights Covid</h1>
+        </header>
+        <nav>
+            <a href="/homepage">Home</a>
+            <a href="/slot_check">Slot Availability</a>
+            <a href="/down_cert">Download Certificate</a>
+            <a href="#about_section">About Developer</a>
+        </nav>
+    </div>
+
+    <section>
+        <div class = 'container'>
+            <h3><span class = 'sub_heading'><u>Vaccination Centres' <br>availability</span>
+                <i><br><br><br>Check the availability of vaccination centres and get <br>yourself protected against the Covid-19.</u></i></h3>
+            <a href="/slot_check">
+                <img src="{% static 'images/vaccination.jpg' %}" width="500px" height="auto">
+            </a>
+        </div>
+    </section>
+
+    <section>
+        <div class = 'container'>
+            <a href="/down_cert">
+                <img src="{% static 'images/certif.jpg' %}" width="500px" height="auto">
+            </a>
+            <h3><span class='sub_heading'><u>Download Vaccination <br>Certificate</span>
+                <i><br><br><br>Download your vaccination certificate directly<br>with your beneficiary reference id.</u></i></h3>
+        </div>
+    </section>
+
+    <section id="about_section">
+        <h3 class = 'sub_heading'><u>About Developer</u></h3>
+        <img src="{% static 'images/self.jpg' %}" alt="self_image" height="150px" width="auto" >
+        <h4><u>
+            Tarun Teotia<br>
+            UE208112<br>
+            I.T 3<sup>rd</sup> year<br>
+            UIET, Panjab University, Chandigarh
+        </u></h4>
+    </section>
+</body>
+</html>

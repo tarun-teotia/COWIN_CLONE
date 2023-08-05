@@ -1,0 +1,163 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Download Certificate</title>
+    <link rel="stylesheet" href="{% static 'style2.css' %}">
+</head>
+
+<body>
+    <div class="group">
+        <header>
+            <h1>India fights Covid</h1>
+        </header>
+        <nav>
+            <a href="/homepage">Home</a>
+            <a href="/slot_check">Slot Availability</a>
+            <a href="/down_cert">Download Certificate</a>
+            <a href="/about">About Developer</a>
+        </nav>
+    </div>
+
+    <section>
+        <div class="container">
+            <div>
+                <form method = "GET">
+                    <div>
+                        <span>
+                            <input type="radio" name="choice" value="district" onclick = 'func1()' checked><label>By District</label>
+                            <input type="radio" name="choice" value="pincode" onclick = 'func2()'><label>By Pincode</label>
+                        </span>
+                    </div>
+
+                    <div>
+                        <span id = 'by_statea' style = 'visibility: visible'>
+                            <label>Select State</label>
+                            <select name="state">
+                                <option>nil</option>
+                                {% for name in state_name %}
+                                <option>{{name}}</option>
+                                {% endfor %}
+                            </select>
+                            <button type="submit">Get Districts</button>
+                        </span>
+                    </div>
+                </form>
+                    
+                <form method = "GET">
+                    <div>
+                        <span id = 'by_stateb' style = 'visibility: visible'>
+                            
+                            {% if state %}
+                            <h5>State selected: {{state}}</h5>
+                            {% endif %}
+
+                            <label>Select District</label>
+                            <select name="district">
+                                <option>nil</option>
+                                {% if districts %}
+                                {% for dis in districts %}
+                                <option>{{dis}}</option>
+                                {% endfor %}
+                                {% endif %}
+                            </select>
+                            <button type = 'submit'>Search</button>
+                        </span>
+                    </div>
+                </form>
+
+                <form method="GET">
+                    <div class = 'no_m2'>
+                        <span id = 'by_pincode' style = 'visibility: hidden'>
+                            <label>Enter Pincode</label>
+                            <input type="text" pattern="[0-9]{6}" name="pin_code">
+                            <button type = 'submit'>Search</button>
+                        </span>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <ol>
+    {% if centre == 'Na' %}
+        No centre available
+    {% endif %}
+    {% if centre != 'Na' %}
+        {% for i in centre %}
+            {% for key, value in i.items %}
+                {% if key in l1 %}
+                    {% if key == 'name' %}
+                        <li><b>{{value}}</b></li>
+                    {% endif %}
+                    {% if key != 'name' %}
+                        {{value}}
+                    {% endif %}
+                    {% if key in l2 %}
+                        ,
+                    {% endif %}
+                {% endif %}
+                {% if key == 'fee_type' %}
+                        <b>{{value}}</b>
+                {% endif %}
+                {% if key == 'vaccine_fees' %}
+                    {% for z in value %}
+                        {% for key4, value4 in z.items %}
+                            - {{key4}} => {{value4}}<br>
+                        {% endfor %}
+                    {% endfor %}
+                {% endif %}
+                {% if key == 'sessions' %}
+                    <div class='table'>
+                    {% for j in value %}
+                        <div class='table_items'>
+                        {% for key2, value2 in j.items %}
+                            {% if key2 != 'session_id' and key2 != 'slots' %}
+                                {% if key2 == 'date' %}
+                                    <b><u># {{key2}} - {{value2}}</u></b><br>
+                                {% endif %}
+                                {% if key2 != 'date' %}
+                                    {{key2}} - {{value2}}<br>
+                                {% endif %}
+                            {% endif %}
+                            {% if key2 == 'slots' %}
+                                <br><b># {{key2}}</b><br>
+                                {% for k in value2 %}
+                                    {% for key3, value3 in k.items %}
+                                        - {{key3}} -> {{value3}}<br>
+                                    {% endfor %}
+                                    <br>
+                                {% endfor %}
+                            {% endif %}
+                        {% endfor %}
+                        </div>
+                    {% endfor %}
+                    </div>
+                {% endif %}
+            {% endfor %}
+            <br>
+        {% endfor %}
+    {% endif %}
+    </ol>
+
+    <script>
+        function func1(){
+            document.getElementById('by_statea').style.visibility = 'visible';
+            document.getElementById('by_stateb').style.visibility = 'visible';
+            document.getElementById('by_pincode').style.visibility = 'hidden';
+        }
+        function func2(){
+            document.getElementById('by_pincode').style.visibility = 'visible';
+            document.getElementById('by_statea').style.visibility = 'hidden';
+            document.getElementById('by_stateb').style.visibility = 'hidden';
+        }
+        function func3(){
+            document.getElementById('by_statea').style.visibility = 'visible';
+            document.getElementById('by_stateb').style.visibility = 'visible';
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,99 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Download Certificate</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+</head>
+
+<body>
+    <div class="group">
+        <header>
+            <h1>India fights Covid</h1>
+        </header>
+        <nav>
+            <a href="/homepage">Home</a>
+            <a href="/slot_check">Slot Availability</a>
+            <a href="/down_cert">Download Certificate</a>
+            <a href="/about">About Developer</a>
+        </nav>
+    </div>
+
+    <section>
+        <div class="container">
+            <ul>
+                <li>
+                    <span class = 'steps'>Step 1</span>
+                    Enter your registered mobile number
+                </li>
+                
+                <li>
+                    <span class = 'steps'>Step 2</span>
+                    Enter OTP
+                </li>
+                
+                <li>
+                    <span class = 'steps'>Step 3</span>
+                    Enter the beneficiary id
+                </li>
+
+                <li>
+                    <span class = 'steps'>Step 4</span>
+                    Look into your default Download folder
+                </li>
+            
+                <li>
+                    <span class = 'steps'>Step 5</span>
+                    Your vaccination certificate has been downloaded successfully
+                </li>
+            </ul>
+            <img src="{% static 'images/certif.jpg' %}" width="400px" height="auto">
+        </div>
+    </section>
+
+    <section>
+        <div class = 'container2'>
+            <form method="POST">
+                {% csrf_token %}
+                <div class = 'main_text'>
+                    Enter mobile no. for OTP verfication<br>
+                    <input class = 'mobile_box' type="tel" name="mobile" pattern="[0-9]{10}" placeholder="mobile number">
+                    <button class = 'mobile_button' type="submit">get otp</button>
+                </div>
+            </form>
+
+            {% if mobile %}
+                <form method="POST">
+                    {% csrf_token %}
+                    <div class = 'main_text'>
+                        Enter OTP verfication<br>
+                        <input class = 'mobile_box' type="tel" name="otp" pattern="[0-9]{6}" placeholder="otp">
+                        <button type="submit">submit</button>
+                        {% if res_2_text %}
+                        <h4>{{res_2_text}}</h4>
+                        {% endif %}
+                    </div>
+                </form>
+            {% endif %}
+
+            {% if otp %}
+                <form method="POST">
+                    {% csrf_token %}
+                    <div class = 'main_text'>
+                        Enter Beneficiary Reference id<br>
+                        <input class = 'mobile_box' type="tel" name="ben_id" placeholder="beneficiary_id">
+                        <button type="submit">get certificate</button>
+                    </div>
+                </form>
+            {% endif %}
+
+            {% if rr %}
+                <h4>Certificate downloaded successfully, if not opening,<br>check beneficiary id and try again.</h4>
+            {% endif %}
+        </div>
+    </section>
+</body>
+</html>
